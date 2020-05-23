@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:id = "@+id/activityProduct"
+    android:background="#ffffff"
+    >
+
+
+    <LinearLayout
+        android:layout_weight="0"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/colorPrimaryDark"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        >
+
+        <fragment
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp"
+            android:id="@+id/fragmentArrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:name="com.example.siberianforest.FragmentArrowBack"/>
+        <EditText
+            android:maxLines="1"
+            android:id="@+id/search"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/round_corner"
+            android:focusable="auto"
+
+            android:focusableInTouchMode="true"
+            android:hint="Поиск"
+            android:paddingLeft="15dp"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+
+    <FrameLayout
+        android:id="@+id/fragmentView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+
+
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id = "@+id/bottomMenu"
+        app:itemIconTint="@color/colorPrimaryDark"
+        app:labelVisibilityMode="labeled"
+        android:background="@drawable/straightcorner"
+        app:menu="@menu/bottom_menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+
+
+</LinearLayout>

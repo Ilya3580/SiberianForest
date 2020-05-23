@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "390364404460",
+    "firebase_url": "https://siberianforest-73d09.firebaseio.com",
+    "project_id": "siberianforest-73d09",
+    "storage_bucket": "siberianforest-73d09.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:390364404460:android:b9d9b5573de5023cde23c9",
+        "android_client_info": {
+          "package_name": "com.example.siberianforest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "390364404460-8j4vlh0in2kong0gl8lnatipmb03aprk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.siberianforest",
+            "certificate_hash": "bef83bad7781e07fca577c31bdb6aca1e30f2b98"
+          }
+        },
+        {
+          "client_id": "390364404460-hrmm77gckeshsn1a3ht9dekbv0t78ovf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGjhUj9vB0cEyRMBVq8A3H1liuwqOluAI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "390364404460-hrmm77gckeshsn1a3ht9dekbv0t78ovf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

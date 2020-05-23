@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+
+    android:id = "@+id/product"
+    >
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        >
+        <ImageView
+            android:id="@+id/imageObject"
+            android:layout_width="175dp"
+            android:layout_height="100dp"
+            android:src="@drawable/siberianforestlogo"
+            android:layout_gravity="center"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="20dp"
+            />
+        <TextView
+            android:id="@+id/parametrs"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:gravity="center"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="Название и краткие харак."
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:layout_marginTop="10dp"
+
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="10dp"
+        >
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            android:orientation="horizontal"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:id = "@+id/containerList">
+
+            <Spinner
+                android:layout_marginRight="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/arrowcorner"
+                android:layout_weight="1"
+                android:id = "@+id/leftSpinner"
+
+
+                />
+
+            <Spinner
+                android:layout_marginLeft="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:background="@drawable/arrowcorner"
+                android:id = "@+id/rightSpinner"
+                />
+
+
+        </LinearLayout>
+        <Spinner
+
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/arrowcorner"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:id = "@+id/spinner"
+
+
+            />
+        <Button
+            android:id="@+id/bigParametrs"
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_height="50dp"
+            android:text="Полные характеристики"
+            android:background="@drawable/round_corner"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:textSize="16sp"
+            android:layout_marginBottom="30dp"
+
+            />
+    </LinearLayout>
+
+
+</LinearLayout>

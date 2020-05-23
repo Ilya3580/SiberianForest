@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".RegActivity"
+    tools:showIn="@layout/activity_reg">
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <TextView
+
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:paddingLeft="15dp"
+            android:text="Регистрация"
+            android:textAlignment="center"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+
+            />
+
+        <EditText
+            android:maxLines="1"
+            android:inputType="textCapWords"
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/straightcorner"
+            android:hint="Имя"
+            android:textSize="20sp"
+            android:gravity="center_vertical"
+            android:paddingLeft="15dp"
+            android:layout_marginTop="30dp"
+            />
+        <EditText
+            android:maxLines="1"
+            android:inputType="textCapWords"
+            android:id="@+id/surname"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/straightcorner"
+            android:hint="Фамилия"
+            android:textSize="20sp"
+            android:gravity="center_vertical"
+            android:paddingLeft="15dp"
+            android:layout_marginTop="30dp"
+            />
+        <EditText
+            android:maxLines="1"
+            android:inputType="textCapWords"
+            android:id="@+id/middleName"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/straightcorner"
+            android:hint="Отчество"
+            android:textSize="20sp"
+            android:gravity="center_vertical"
+            android:paddingLeft="15dp"
+            android:layout_marginTop="30dp"
+            />
+
+        <EditText
+            android:maxLines="1"
+            android:id="@+id/phone"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/straightcorner"
+            android:hint="Телефон"
+            android:inputType="phone|textCapWords"
+            android:textSize="20sp"
+            android:gravity="center_vertical"
+            android:paddingLeft="15dp"
+            android:layout_marginTop="30dp"
+            />
+        <EditText
+            android:maxLines="1"
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/straightcorner"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:textSize="20sp"
+            android:gravity="center_vertical"
+            android:paddingLeft="15dp"
+            android:layout_marginTop="30dp"
+            />
+        <EditText
+            android:maxLines="1"
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/straightcorner"
+            android:hint="Пароль"
+            android:inputType="textPassword"
+            android:textSize="20sp"
+            android:gravity="center_vertical"
+            android:paddingLeft="15dp"
+            android:layout_marginTop="30dp"
+            />
+
+        <LinearLayout
+            android:layout_marginTop="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="30dp"
+            >
+
+            <Button
+                android:id="@+id/leftButton"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="7"
+                android:background="@drawable/round_corner"
+                android:text="Отмена"
+                android:textAlignment="center"
+                style="@style/TextAppearance.AppCompat.Button" />
+
+            <Button
+                android:id="@+id/rightButton"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="30dp"
+                android:layout_weight="3"
+                android:background="@drawable/round_corner"
+                android:text="@string/register"
+                android:textAlignment="center"
+                style="@style/TextAppearance.AppCompat.Button" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>
