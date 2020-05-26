@@ -94,7 +94,7 @@ public class RegActivity extends AppCompatActivity {
 
                                                 FirebaseUser userAuth = auth.getCurrentUser();
                                                 UserProfileChangeRequest.Builder builder =  new UserProfileChangeRequest.Builder();
-                                                String namen =  user.getPhone()+"$"+user.getName()+"$"+user.getSurname()+"$"+user.getMiddleName()+user.getEmail();
+                                                String namen =  user.getSurname()+"  "+user.getName()+"  "+user.getMiddleName()+"  "+user.getPhone();
                                                 builder.setDisplayName(namen);
                                                 UserProfileChangeRequest u = builder.build();
                                                 userAuth.updateProfile(u);

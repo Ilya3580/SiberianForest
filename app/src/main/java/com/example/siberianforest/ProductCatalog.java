@@ -83,14 +83,7 @@ public class ProductCatalog extends AppCompatActivity {
             fragmentProductImage.setCountElement(lstPars.size());
         }
 
-        for(int i = 0; i!=lstPars.size(); i++)
-        {
-            Log.d("TAGA",   "------------- " + i);
-            for(int j = 0; j!=lstPars.get(i).size(); j++)
-            {
-                Log.d("TAGA", lstPars.get(i).get(j).toString());
-            }
-        }
+
         fragmentProductImage.setCountElement(lstPars.size());
         renderCatalog();
         if (sPref.contains(SAVE_AUTOREG)) {

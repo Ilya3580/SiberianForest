@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -30,8 +31,10 @@ public class MainActivity extends Activity {
     FirebaseDatabase db;
     DatabaseReference users;
     SharedPreferences sPref;
+    final String EMAIL = "EMAIL";
+    final String PASSWORD = "PASSWORD";
+    final String NAMEN = "NAMEN";
     final String SAVE_AUTOREG = "SAVE_SETTINGS";
-    final String SAVE_ENTER = "SAVE_ENTER";
     final String NAME_SPREF = "autoris";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,11 +66,15 @@ public class MainActivity extends Activity {
                                     {
                                         SharedPreferences.Editor sp = sPref.edit();
                                         sp.putString(SAVE_AUTOREG, "Authorized");
+                                        sp.putString(EMAIL, emailAdress.getText().toString());
+                                        sp.putString(PASSWORD, password.getText().toString());
+                                        sp.putString(NAMEN, user.getDisplayName());
+                                        Log.d("TAGA", sPref.getString(NAMEN, ""));
                                         sp.commit();
                                         Intent intent = new Intent(MainActivity.this, ProductCatalog.class);
                                         startActivity(intent);
                                     }else{
-                                        Snackbar.make(findViewById(android.R.id.content), "Gодтвердите email по отправленной вам ссылке", Snackbar.LENGTH_LONG).show();
+                                        Snackbar.make(findViewById(android.R.id.content), "Подтвердите email по отправленной вам ссылке", Snackbar.LENGTH_LONG).show();
                                     }
                                 }
                             }).addOnFailureListener(new OnFailureListener() {

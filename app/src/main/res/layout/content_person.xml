@@ -38,7 +38,21 @@ tools:showIn="@layout/activity_person">
 
 
 </LinearLayout>
-
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="30dp"
+        android:text="@string/avtoris"
+        android:background="@drawable/round_corner"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="0.0" />
     <ListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
@@ -49,25 +63,12 @@ tools:showIn="@layout/activity_person">
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintTop_toBottomOf="@+id/button"
         app:layout_constraintVertical_bias="0.0">
 
     </ListView>
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="30dp"
-        android:text="@string/avtoris"
-        android:background="@drawable/round_corner"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        app:layout_constraintVertical_bias="0.0" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

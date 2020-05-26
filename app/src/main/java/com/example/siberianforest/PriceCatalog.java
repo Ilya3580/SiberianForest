@@ -41,7 +41,6 @@ public class PriceCatalog {
 
     public String splitPrise(ArrayList<PriceCatalog> lst, String size, String sort)
     {
-        Log.d("TAGZ", lst.get(0).toString() + "###" + size);
         String priceM2 = "";
         String priceM3 = "";
         boolean flag = false;

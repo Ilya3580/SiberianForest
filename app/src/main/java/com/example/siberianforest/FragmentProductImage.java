@@ -187,7 +187,6 @@ public class FragmentProductImage extends Fragment {
                             setStrSize(holder.spinnerRight.getSelectedItem().toString());
                         strSort = holder.spinnerLeft.getSelectedItem().toString();
                         holder.price.setText(priceCatalog.splitPrise(mItems.get(positionParent).priceCatalogs, strSize, strSort));
-                        Log.d("TAGA", positionParent + "");
 
                     }
 
