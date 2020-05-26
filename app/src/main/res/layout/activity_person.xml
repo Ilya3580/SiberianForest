@@ -8,11 +8,21 @@
     tools:context=".PersonActivity">
 
 
+    <include
+        android:id="@+id/include"
+        layout="@layout/content_person" />
 
+    <com.google.android.material.bottomnavigation.BottomNavigationView
 
-
-    <include layout="@layout/content_person" />
-
+        android:id="@+id/bottomMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/straightcorner"
+        app:itemIconTint="@color/colorPrimaryDark"
+        app:labelVisibilityMode="labeled"
+        app:layout_anchor="@+id/include"
+        app:layout_anchorGravity="bottom|center"
+        app:menu="@menu/bottom_menu" />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

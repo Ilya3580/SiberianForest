@@ -72,25 +72,25 @@ public class PriceCatalog {
                     if (min2 == Integer.MAX_VALUE || max2 == Integer.MIN_VALUE) {
                         if(min1 == max1)
                         {
-                            return min1 + " руб. метр погонный";
+                            return min1 + " р./M";
                         }
-                        return min1 + "-" + max1 + " руб. метр погонный";
+                        return min1 + "-" + max1 + " р./M";
                     }
                 }
                 if (min1 == Integer.MAX_VALUE || max1 == Integer.MIN_VALUE) {
                     if(min2 == max2) {
-                        return min2 + " руб. метр куб";
+                        return min2 + "  р./M3";
                     }
-                    return min2 + "-" + max2 + " руб. метр куб";
+                    return min2 + "-" + max2 + " р./M3";
                 }
                 if (min2 == Integer.MAX_VALUE || max2 == Integer.MIN_VALUE) {
                     if(min1 == max1)
                     {
-                        return min1 + " руб. метр квадратный";
+                        return min1 + " р./M2";
                     }
-                    return min1 + "-" + max1 + " руб. метр квадратный";
+                    return min1 + "-" + max1 + " р./M2";
                 }
-                return min1 + "-" + max1 + " руб. метр квадрат; " + min2 + "-" + max2 + " руб. метр куб";
+                return min1 + "-" + max1 + " р./M2; " + min2 + "-" + max2 + " р./M3";
             }
         }
         if(sort != null) {
@@ -121,25 +121,25 @@ public class PriceCatalog {
                     if (min2 == Integer.MAX_VALUE || max2 == Integer.MIN_VALUE) {
                         if(min1 == max1)
                         {
-                            return min1 + " руб. метр погонный";
+                            return min1 + " р./M";
                         }
-                        return min1 + "-" + max1 + " руб. метр погонный";
+                        return min1 + "-" + max1 + " р./M";
                     }
                 }
                 if (min1 == Integer.MAX_VALUE || max1 == Integer.MIN_VALUE) {
                     if(min2 == max2) {
-                        return min2 + " руб. метр куб";
+                        return min2 + " р./M3";
                     }
-                    return min2 + "-" + max2 + " руб. метр куб";
+                    return min2 + "-" + max2 + " р./M3";
                 }
                 if (min2 == Integer.MAX_VALUE || max2 == Integer.MIN_VALUE) {
                     if(min1 == max1)
                     {
-                        return min1 + " руб. метр квадратный";
+                        return min1 + " р./M2";
                     }
-                    return min1 + "-" + max1 + " руб. метр квадратный";
+                    return min1 + "-" + max1 + " р./M2";
                 }
-                return min1 + "-" + max1 + " руб. метр квадрат; " + min2 + "-" + max2 + " руб. метр куб";
+                return min1 + "-" + max1 + " р./M2;     " + min2 + "-" + max2 + " р./M3";
             }
         }
         for(int i = 0;i != lst.size(); i++)

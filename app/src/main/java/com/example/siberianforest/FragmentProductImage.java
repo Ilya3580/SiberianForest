@@ -1,11 +1,13 @@
 package com.example.siberianforest;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -13,15 +15,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.squareup.picasso.Picasso;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -33,20 +39,20 @@ import java.util.List;
 import static android.content.Context.MODE_PRIVATE;
 
 public class FragmentProductImage extends Fragment {
+    ArrayList<String> arrayListBasket = new ArrayList<>();
+    String[] masLf;
+    String[] masRg;
     String strSize = "";
     String strSort = "";
-    String saveString;
     SharedPreferences sPref;
     Context context;
     private PriceCatalog priceCatalog = new PriceCatalog();
     private int countElement;
-    private ArrayList<ImageView> viewHolders = new ArrayList<>();
     private FragmentProductImage fragment;
     private List<ProductImage> mItems;
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private HelpAdapter mAdapter;
-    final String FIRST_ENTER = "FIRST_ENTER";
     final String NAME_SPREF = "autoris";
 
     @Override
@@ -57,64 +63,6 @@ public class FragmentProductImage extends Fragment {
         return view;
     }
 
-    public void saveImage()
-    {
-        new Thread(new Runnable() {
-        public void run() {
-            saveImageHelp();
-        }}).start();
-    }
-
-    private void saveImageHelp()
-    {
-
-        for(int i = 0; i!=viewHolders.size();i++) {
-            if(((BitmapDrawable)viewHolders.get(i).getDrawable()) == null)
-            {
-                continue;
-            }
-            Bitmap bitmap = ((BitmapDrawable)viewHolders.get(i).getDrawable()).getBitmap();
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 1 , stream);
-            String str = "";
-            byte[] byteArray = stream.toByteArray();
-            for (int j = 0; j != byteArray.length; j++) {
-                if(j == 0) {
-                    str = byteArray[j] + "";
-                }
-                else{
-                    str +="###" + byteArray[j];
-                }
-            }
-            //Log.d("TAGZ", str);
-            if(i == 0)
-            {
-                saveString = str;
-            }else{
-                saveString += "####" + str;
-            }
-        }
-        //Log.d("TAGZ", "size = " + viewHolders.size());
-        if(countElement == viewHolders.size())
-        {
-            SharedPreferences.Editor ed = sPref.edit();
-            ed.putString(FIRST_ENTER, "FALSE");
-            ed.commit();
-        }
-
-        //writeToFile(saveString, context);
-    }
-    private void writeToFile(String stringPriceCatalog, Context context) {
-        try {
-            FileOutputStream fileOutput = context.openFileOutput("imageFile.txt", MODE_PRIVATE);
-            fileOutput.write(stringPriceCatalog.getBytes());
-            fileOutput.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     public static FragmentProductImage newInstance() {
         FragmentProductImage fragment = new FragmentProductImage();
@@ -177,7 +125,7 @@ public class FragmentProductImage extends Fragment {
 
             if(mItems.get(positionParent).leftSpinner != null) {
                 holder.spinnerLeft.setVisibility(View.VISIBLE);
-                ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, mItems.get(positionParent).leftSpinner);
+                ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, masLf = mItems.get(positionParent).leftSpinner);
                 adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 holder.spinnerLeft.setAdapter(adapter1);
                 holder.spinnerLeft.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -215,7 +163,7 @@ public class FragmentProductImage extends Fragment {
 
             if(mItems.get(positionParent).rightSpinner != null) {
                 holder.spinnerRight.setVisibility(View.VISIBLE);
-                ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, mItems.get(positionParent).rightSpinner);
+                ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, masRg = mItems.get(positionParent).rightSpinner);
                 adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 holder.spinnerRight.setAdapter(adapter2);
 
@@ -252,7 +200,38 @@ public class FragmentProductImage extends Fragment {
                     }
                 });
             }
-            viewHolders.add(holder.mImage);
+
+            /*holder.button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String name;
+                    String link;
+                    String spinL = null,spinR = null;
+                    String[] masL = null, masR = null;
+                    if(strSize == null)
+                    {
+                        masL = masLf;
+                        spinL = holder.spinnerLeft.getSelectedItem().toString();
+                    }
+                    if(strSort == null)
+                    {
+                        masR = masRg;
+                        spinR = holder.spinnerRight.getSelectedItem().toString();
+                    }
+                    if(strSize != null && strSort != null && holder.spinnerLeft.getSelectedItem() != null && holder.spinnerRight.getSelectedItem() != null)
+                    {
+                        masL = masLf;
+                        masR = masRg;
+                        spinL = holder.spinnerLeft.getSelectedItem().toString();
+                        spinR = holder.spinnerRight.getSelectedItem().toString();
+                    }
+                    link = mItems.get(positionParent).getLink();
+                    name = mItems.get(positionParent).name;
+
+                    alertDialogCount(holder.price.getText().toString(), name, link, spinL, spinR, masL, masR);
+
+                }
+            });*/
 
         }
 
@@ -304,5 +283,55 @@ public class FragmentProductImage extends Fragment {
         this.strSort = strSort;
     }
 
+    /*private void alertDialogCount(final String strPrice, final String name, final String link,
+                                  final String spinL, final String spinR, final String[] masL, final String[] masR)
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Введите количество " + strPrice.trim().substring(strPrice.trim().charAt('M')));
+        final EditText input = new EditText(getActivity());
 
+        input.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
+
+        builder.setView(input);
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                int countProduct = Integer.parseInt(input.getText().toString());
+                String strMasL = "", strMasR = "";
+                if(masL != null)
+                    for(int i = 0; i!= masL.length; i++)
+                    {
+                        if(i == 0) {
+                            strMasL = masL[i];
+                        }
+                        else
+                        {
+                            strMasL =strMasL + "###" + masL[i];
+                        }
+                    }
+                if(masR != null)
+                    for(int i = 0; i!= masR.length; i++)
+                    {
+                        if(i == 0) {
+                            strMasR = masR[i];
+                        }
+                        else
+                        {
+                            strMasR =strMasR + "###" + masR[i];
+                        }
+                    }
+
+                String conc = name + "####" + spinL + "####" + spinR;
+                Log.d("TAGA", conc);
+                arrayListBasket.add(conc);
+            }
+        });
+
+        builder.show();
+    }*/
+
+    public ArrayList<String> getArrayListBasket() {
+        return arrayListBasket;
+    }
 }
