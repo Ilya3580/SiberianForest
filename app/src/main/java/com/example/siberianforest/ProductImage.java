@@ -5,32 +5,51 @@ import android.graphics.Bitmap;
 import java.util.ArrayList;
 
 public class ProductImage {
+    String link;
     Bitmap image;
-    String[] spinner;
     String[] rightSpinner;
     String[] leftSpinner;
     String bigParamentrs;
     String name;
+    String price;
+    ArrayList<PriceCatalog> priceCatalogs;
 
-
-
-    public ProductImage(Bitmap image, String[] leftSpinner, String[] spinner, String[] rightSpinner, String name, String bigParamentrs) {
-
-        this.spinner = spinner;
+    public ProductImage(Bitmap image, String[] leftSpinner, String[] rightSpinner, String name,
+                        String bigParamentrs, String link, String price, ArrayList<PriceCatalog> priceCatalogs) {
+        this.link = link;
         this.image = image;
         this.rightSpinner = rightSpinner;
         this.leftSpinner = leftSpinner;
         this.bigParamentrs = bigParamentrs;
         this.name = name;
+        this.price = price;
+        this.priceCatalogs = priceCatalogs;
     }
 
-    public String[] getSpinner() {
-        return spinner;
+    public ArrayList<PriceCatalog> getPriceCatalogs() {
+        return priceCatalogs;
     }
 
-    public void setSpinner(String[] spinner) {
-        this.spinner = spinner;
+    public void setPriceCatalogs(ArrayList<PriceCatalog> priceCatalogs) {
+        this.priceCatalogs = priceCatalogs;
     }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
     public Bitmap getImage() {
         return image;
     }

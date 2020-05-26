@@ -12,14 +12,15 @@
         <activity
             android:name=".PersonActivity"
             android:label="@string/title_activity_person"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".RegActivity"
             android:label="@string/title_activity_reg"
+            android:windowSoftInputMode="adjustResize"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ProductCatalog"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,11 +1,8 @@
 package com.example.siberianforest;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Entity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -13,57 +10,89 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-
-import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
 import java.io.BufferedReader;
-import java.io.InputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ProductCatalog extends AppCompatActivity {
 
     FragmentProductImage fragmentProductImage=FragmentProductImage.newInstance();
     private List<ProductImage> mItems=new ArrayList<>();
-
     EditText search;
     SharedPreferences sPref;
+    final String FIRST_ENTER = "FIRST_ENTER";
     final String SAVE_AUTOREG = "SAVE_SETTINGS";
     final String NAME_SPREF = "autoris";
-    ArrayList<String> lst;
-
+    ArrayList<ArrayList<PriceCatalog>> lstPars;
+    PriceCatalog priceCatalog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_product_catalog);
+        search = (EditText) findViewById(R.id.search);
+        sPref = getSharedPreferences(NAME_SPREF, Context.MODE_PRIVATE);
+        priceCatalog = new PriceCatalog();
 
-
-        lst = new ArrayList<>();
-        InputStream is = this.getResources().openRawResource(R.raw.textparametrs);
-        readFile(lst, is);
-        for(int i = 0; i < lst.size(); i++)
-        {
-            Log.d("TAGB", lst.get(i));
+        if (sPref.contains(FIRST_ENTER)) {
+            if (sPref.getString(FIRST_ENTER, "").equals("TRUE")) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        new Parsing().start(getApplicationContext());
+                    }
+                });
+                lstPars = priceCatalog.splitString(read());
+                String data = read();
+                lstPars = priceCatalog.splitString(data);
+                fragmentProductImage.setCountElement(lstPars.size());
+                SharedPreferences.Editor ed = sPref.edit();
+                ed.putString(FIRST_ENTER, "FALSE");
+                ed.commit();
+            }
+            else
+            {
+                SharedPreferences.Editor ed = sPref.edit();
+                ed.putString(FIRST_ENTER, "TRUE");
+                ed.commit();
+                String data = read();
+                lstPars = priceCatalog.splitString(data);
+            }
+        }else{
+            SharedPreferences.Editor ed = sPref.edit();
+            ed.putString(FIRST_ENTER, "FALSE");
+            ed.commit();
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    new Parsing().start(getApplicationContext());
+                }
+            });
+            lstPars = priceCatalog.splitString(read());
+            String data = read();
+            lstPars = priceCatalog.splitString(data);
+            fragmentProductImage.setCountElement(lstPars.size());
         }
 
-        search = (EditText) findViewById(R.id.search);
-
-        sPref = getSharedPreferences(NAME_SPREF, Context.MODE_PRIVATE);
-
+        for(int i = 0; i!=lstPars.size(); i++)
+        {
+            Log.d("TAGA",   "------------- " + i);
+            for(int j = 0; j!=lstPars.get(i).size(); j++)
+            {
+                Log.d("TAGA", lstPars.get(i).get(j).toString());
+            }
+        }
+        fragmentProductImage.setCountElement(lstPars.size());
+        renderCatalog();
         if (sPref.contains(SAVE_AUTOREG)) {
 
             if (sPref.getString(SAVE_AUTOREG, "").equals("Authorized")) {
@@ -71,14 +100,10 @@ public class ProductCatalog extends AppCompatActivity {
 
             }
         }
-
-
         search.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
-
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
             }
@@ -89,8 +114,6 @@ public class ProductCatalog extends AppCompatActivity {
                 renderCatalog();
             }
         });
-
-        renderCatalog();
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomMenu);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener()
@@ -113,7 +136,6 @@ public class ProductCatalog extends AppCompatActivity {
             }
         });
     }
-
     private void renderCatalog()
     {
         if(findViewById(R.id.fragmentView) != null)
@@ -121,47 +143,20 @@ public class ProductCatalog extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().remove(fragmentProductImage).commit();
             fragmentProductImage.onDestroy();
             fragmentProductImage=FragmentProductImage.newInstance();
-
-
         }
         mItems.clear();
-        for(int i = 0; i!=lst.size();i++) {
-            String[] mas = lst.get(i).split("&");
-            String img = mas[0];
-            int idImage = getResources().getIdentifier(img, "drawable", getPackageName());
-            String[] str = ("Материал," + mas[3]).split(",");
-            String[] str1 = ("Сорт," + mas[2]).split(",");
-            String[] str2 = ("Размер," + mas[4]).split(",");
-            mItems.add(new ProductImage(BitmapFactory.decodeResource(getResources(), idImage), str1, str, str2, mas[1], "Информация"));
+        for(int i = 0; i!=lstPars.size();i++) {
+            mItems.add(new ProductImage(null,priceCatalog.splitSort(lstPars.get(i)),
+                    priceCatalog.splitSize(lstPars.get(i)),
+                    lstPars.get(i).get(0).getName(),
+                    "Информация",
+                    lstPars.get(i).get(0).getLineImage(),
+                    priceCatalog.splitPrise(lstPars.get(i), "размер", "сорт"),
+                    lstPars.get(i)
+                    ));
         }
         fragmentProductImage.setItems(mItems);
         getSupportFragmentManager().beginTransaction().add(R.id.fragmentView,fragmentProductImage).commit();
-    }
-
-
-    public void readFile(ArrayList<String> lst, InputStream is)
-    {
-        String texttxt = "";
-        StringBuffer sbuffer = new StringBuffer();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-
-        try {
-
-            while ((texttxt = reader.readLine()) != null) {
-                lst.add(texttxt);
-
-            }
-
-            //textView1.setText(sbuffer);
-            is.close();
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-
-
-        }
-
     }
 
     @Override
@@ -183,7 +178,6 @@ public class ProductCatalog extends AppCompatActivity {
             }
         }
     }
-
     private static int levenstain(String str1, String str2)
     {
         int[][] str = new int[str1.length()+1][str2.length()+1];
@@ -210,15 +204,15 @@ public class ProductCatalog extends AppCompatActivity {
 
         return str[str1.length()][str2.length()];
     }
-
     private void sortList(final String str)
     {
 
-        Collections.sort(lst, new Comparator<String>() {
+        Collections.sort(lstPars, new Comparator<ArrayList<PriceCatalog>>() {
             @Override
-            public int compare(String o1, String o2) {
-                int a1 = levenstain(o1.split("&")[1],str);
-                int a2 = levenstain(o2.split("&")[1],str);
+            public int compare(ArrayList<PriceCatalog> o1, ArrayList<PriceCatalog> o2) {
+                Log.d("TAGZ", o1.get(0).getName().split("\\(")[0] + "");
+                int a1 = helpLev(o1.get(0).getName(), str);
+                int a2 = helpLev(o2.get(0).getName(), str);
                 if(a1>a2)
                     return 1;
                 if(a2 == a1)
@@ -228,10 +222,42 @@ public class ProductCatalog extends AppCompatActivity {
                 return 0;
             }
         });
+    }
+    private int helpLev(String string1, String string2)
+    {
+        String[] str = string1.split(" ");
+        int min = Integer.MAX_VALUE;
+        for(int i = 0;i!=str.length;i++)
+        {
+            int a = levenstain(str[i], string2);
+            if(a<min)
+            {
+                min = a;
+            }
+        }
+        return min;
+    }
+    private String read()
+    {
+        String text = "";
+        try {
 
+            FileInputStream fileInput = openFileInput("textparametr.txt");
+            InputStreamReader reader = new InputStreamReader(fileInput);
+            BufferedReader buffered = new BufferedReader(reader);
+            StringBuffer strBuffer = new StringBuffer();
+            String lines;
 
-
-
+            while ((lines = buffered.readLine())!=null)
+            {
+                text+=lines;
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return text;
     }
 }
 

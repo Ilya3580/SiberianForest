@@ -17,6 +17,7 @@
         android:orientation="horizontal"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
+
         >
 
         <fragment
@@ -54,6 +55,7 @@
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
+
         android:id = "@+id/bottomMenu"
         app:itemIconTint="@color/colorPrimaryDark"
         app:labelVisibilityMode="labeled"

@@ -12,6 +12,7 @@
 
 
     <ImageView
+        android:layout_marginTop="10dp"
         android:id="@+id/imageObject"
         android:layout_width="350dp"
         android:layout_height="200dp"
@@ -24,7 +25,7 @@
     <TextView
         android:id="@+id/parametrs"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:gravity="center"
@@ -34,19 +35,32 @@
         android:textAlignment="center"
         android:textSize="20sp" />
 
-
+    <TextView
+        android:id="@+id/price"
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content"
+        android:text="цена"
+        android:background="@drawable/round_corner"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:textSize="20sp"
+        android:textAlignment="center"
+        android:padding = "5dp"
+        />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#ffffff"
         android:orientation="horizontal"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
         android:id = "@+id/containerList">
 
         <Spinner
+            android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_width="match_parent"
             android:layout_height="40dp"
@@ -59,6 +73,7 @@
 
         <Spinner
             android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_weight="1"
@@ -68,17 +83,7 @@
 
 
     </LinearLayout>
-    <Spinner
 
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="@drawable/arrowcorner"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:id = "@+id/spinner"
-
-
-        />
     <Button
         android:id="@+id/bigParametrs"
         android:layout_width="match_parent"
@@ -89,7 +94,18 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:textSize="16sp"
-        android:layout_marginBottom="30dp"
+        />
+    <Button
+        android:id="@+id/dropBasket"
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_height="50dp"
+        android:text="Добавть в корзину"
+        android:background="@drawable/round_corner"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="20dp"
+        android:textSize="16sp"
         />
 
 

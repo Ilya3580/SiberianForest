@@ -9,20 +9,23 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+
 public class ViewHolder extends RecyclerView.ViewHolder {
 
     ImageView mImage;
-    Spinner spinner;
     Spinner spinnerLeft;
     Spinner spinnerRight;
     Button button;
     TextView name;
+    TextView price;
+    ArrayList<PriceCatalog> parsArray;
 
 
     public ViewHolder(@NonNull View itemView) {
         super(itemView);
 
-        spinner = (Spinner) itemView.findViewById(R.id.spinner);
+        price = (TextView)itemView.findViewById(R.id.price);
         mImage = (ImageView) itemView.findViewById(R.id.imageObject);
         spinnerLeft = (Spinner) itemView.findViewById(R.id.leftSpinner);
         spinnerRight = (Spinner) itemView.findViewById(R.id.rightSpinner);
@@ -30,12 +33,20 @@ public class ViewHolder extends RecyclerView.ViewHolder {
         name = (TextView)itemView.findViewById(R.id.parametrs);
     }
 
-    public Spinner getSpinner() {
-        return spinner;
+    public ArrayList<PriceCatalog> getParsArray() {
+        return parsArray;
     }
 
-    public void setSpinner(Spinner spinner) {
-        this.spinner = spinner;
+    public void setParsArray(ArrayList<PriceCatalog> parsArray) {
+        this.parsArray = parsArray;
+    }
+
+    public TextView getPrice() {
+        return price;
+    }
+
+    public void setPrice(TextView price) {
+        this.price = price;
     }
 
     public ImageView getmImage() {

@@ -1,10 +1,6 @@
 package com.example.siberianforest;
-
-
 import android.content.Context;
 import android.os.StrictMode;
-import android.util.Log;
-import com.squareup.picasso.Picasso;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -18,7 +14,6 @@ import java.util.ArrayList;
 import static android.content.Context.MODE_PRIVATE;
 
 public class Parsing {
-
 
     private ArrayList<ArrayList<PriceCatalog>> priceCatalogLast;
 
@@ -37,13 +32,12 @@ public class Parsing {
 
         }
         String stringPriceCatalog = "";
-        /*Log.d("TAGA", priceCatalogLast.size() + "");*/
         for (int i = 0; i != priceCatalogLast.size(); i++) {
-            //Log.d("TAGA", "------------------    " + i);
-            stringPriceCatalog +="------------------    " + i + "\n";
+            if(i != 0)
+                stringPriceCatalog +="------------------    ";
             for (int j = 0; j != priceCatalogLast.get(i).size(); j++) {
                 //Log.d("TAGA", priceCatalogLast.get(i).get(j).toString());
-                stringPriceCatalog +=priceCatalogLast.get(i).get(j).toString() + "\n";
+                stringPriceCatalog +=priceCatalogLast.get(i).get(j).toString() + "####";
             }
         }
 
@@ -177,17 +171,16 @@ public class Parsing {
         {
             String[] priceCatalog = splitPrice(arrayList.get(i));
 
-            Log.d("Tagz", link + priceCatalog[0]);
             if(i == 0) {
 
-                priceCatalogsList.add(new PriceCatalog(Picasso.get().load(link + priceCatalog[0]), priceCatalog[1], priceCatalog[2], priceCatalog[3], priceCatalog[4], priceCatalog[5]));
+                priceCatalogsList.add(new PriceCatalog(link + priceCatalog[0], priceCatalog[1], priceCatalog[3], priceCatalog[4], priceCatalog[5], priceCatalog[6]));
             }else{
                 if(priceCatalog[1].equals(name)) {
-                    priceCatalogsList.add(new PriceCatalog(null, priceCatalog[1], priceCatalog[2], priceCatalog[3], priceCatalog[4], priceCatalog[5]));
+                    priceCatalogsList.add(new PriceCatalog(null, priceCatalog[1], priceCatalog[3], priceCatalog[4], priceCatalog[5], priceCatalog[6]));
                 }else{
                     priceCatalogLast.add(priceCatalogsList);
                     priceCatalogsList = new ArrayList<>();
-                    priceCatalogsList.add(new PriceCatalog(Picasso.get().load(link + priceCatalog[0]), priceCatalog[1], priceCatalog[2], priceCatalog[3], priceCatalog[4], priceCatalog[5]));
+                    priceCatalogsList.add(new PriceCatalog(link + priceCatalog[0], priceCatalog[1], priceCatalog[3], priceCatalog[4], priceCatalog[5], priceCatalog[6]));
                 }
             }
             name = priceCatalog[1];
@@ -196,26 +189,20 @@ public class Parsing {
         priceCatalogLast.add(priceCatalogsList);
         return;
     }
-
     private String[] splitPrice(String string)
     {
-        String[] ret = new String[6];
+
+        String[] ret = new String[7];
         String[] priceCatalog = string.split(">###");
         priceCatalog[0] = priceCatalog[0].substring(priceCatalog[0].indexOf("src=") + 4);
-
+        ret[6] = priceCatalog[3].substring(priceCatalog[3].indexOf(">") + 1, priceCatalog[3].indexOf("</td"));
         try{
             ret[0] = priceCatalog[0].substring(priceCatalog[0].indexOf("src=") + 3, priceCatalog[0].indexOf("</a")-2);
 
-            ret[1] = priceCatalog[1].substring(priceCatalog[1].indexOf("htm\">") + 5, priceCatalog[1].indexOf("</a></td")-1);
-            ret[2] = ret[1].split("\\(")[1];
-            ret[1] = ret[1].split("\\(")[0];
-
+            ret[1] = priceCatalog[1].substring(priceCatalog[1].indexOf("htm\">") + 5, priceCatalog[1].indexOf("</a></td"));
 
             ret[3] = priceCatalog[2].substring(priceCatalog[2].indexOf("ice\">") + 5, priceCatalog[2].indexOf("</td"));
-
             ret[4] = priceCatalog[4].substring(priceCatalog[4].indexOf("ice\">") + 5, priceCatalog[4].indexOf("</td"));
-
-
             ret[5] = priceCatalog[5].substring(priceCatalog[5].indexOf("ice\">") + 5, priceCatalog[5].indexOf("</td"));
         }
         catch(Exception ex){
