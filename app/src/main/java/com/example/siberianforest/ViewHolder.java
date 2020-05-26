@@ -29,7 +29,7 @@ public class ViewHolder extends RecyclerView.ViewHolder {
         mImage = (ImageView) itemView.findViewById(R.id.imageObject);
         spinnerLeft = (Spinner) itemView.findViewById(R.id.leftSpinner);
         spinnerRight = (Spinner) itemView.findViewById(R.id.rightSpinner);
-        button = (Button)itemView.findViewById(R.id.bigParametrs);
+        button = (Button)itemView.findViewById(R.id.dropBasket);
         name = (TextView)itemView.findViewById(R.id.parametrs);
     }
 

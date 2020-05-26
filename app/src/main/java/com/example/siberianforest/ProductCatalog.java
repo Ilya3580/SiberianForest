@@ -149,7 +149,7 @@ public class ProductCatalog extends AppCompatActivity {
             mItems.add(new ProductImage(null,priceCatalog.splitSort(lstPars.get(i)),
                     priceCatalog.splitSize(lstPars.get(i)),
                     lstPars.get(i).get(0).getName(),
-                    "Информация",
+                    "Добавить в корзину",
                     lstPars.get(i).get(0).getLineImage(),
                     priceCatalog.splitPrise(lstPars.get(i), "размер", "сорт"),
                     lstPars.get(i)

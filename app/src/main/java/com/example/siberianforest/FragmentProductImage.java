@@ -23,14 +23,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
-
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -186,7 +184,7 @@ public class FragmentProductImage extends Fragment {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         if(holder.spinnerLeft.getSelectedItem() != null)
-                            setStrSize(holder.spinnerLeft.getSelectedItem().toString());
+                            setStrSize(holder.spinnerRight.getSelectedItem().toString());
                         strSort = holder.spinnerLeft.getSelectedItem().toString();
                         holder.price.setText(priceCatalog.splitPrise(mItems.get(positionParent).priceCatalogs, strSize, strSort));
                         Log.d("TAGA", positionParent + "");
@@ -226,7 +224,7 @@ public class FragmentProductImage extends Fragment {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         if(holder.spinnerLeft.getSelectedItem() != null)
-                        setStrSort(holder.spinnerLeft.getSelectedItem().toString());
+                            setStrSort(holder.spinnerLeft.getSelectedItem().toString());
                         strSize = holder.spinnerRight.getSelectedItem().toString();
                         holder.price.setText(priceCatalog.splitPrise(mItems.get(positionParent).priceCatalogs, strSize, strSort));
                         Log.d("TAGA", positionParent + "");
@@ -306,4 +304,6 @@ public class FragmentProductImage extends Fragment {
     public void setStrSort(String strSort) {
         this.strSort = strSort;
     }
+
+
 }

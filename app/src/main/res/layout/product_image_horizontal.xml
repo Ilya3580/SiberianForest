@@ -59,6 +59,7 @@
             android:layout_marginTop="10dp"
             android:layout_height="wrap_content"
             android:text="цена"
+            android:textColor="#000000"
             android:background="@drawable/round_corner"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
@@ -104,23 +105,13 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/bigParametrs"
-            android:layout_width="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_height="50dp"
-            android:text="Полные характеристики"
-            android:background="@drawable/round_corner"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:textSize="16sp"
-            />
-        <Button
             android:id="@+id/dropBasket"
             android:layout_width="match_parent"
             android:layout_marginTop="15dp"
             android:layout_height="50dp"
             android:text="Добавть в корзину"
-            android:background="@drawable/round_corner"
+            android:textColor="#ffffff"
+            android:background="@drawable/round_corner_green"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:textSize="16sp"
