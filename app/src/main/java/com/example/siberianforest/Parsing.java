@@ -47,6 +47,7 @@ public class Parsing {
 
     }
 
+
     private void writeToFile(String stringPriceCatalog, Context context) {
         try {
             FileOutputStream fileOutput = context.openFileOutput("textparametr.txt", MODE_PRIVATE);
@@ -95,13 +96,26 @@ public class Parsing {
         String inputeLine = "";
 
         StringBuilder str = new StringBuilder();
+        StringBuffer str1 = new StringBuffer();
         boolean flag = false;
+        boolean flag1 = false;
         while (true) {
 
             try {
                 if (null == (inputeLine = buf.readLine())) {
                     break;
                 } else {
+
+                    if (inputeLine.contains(" <a class=\"loga\" href=\"/index.html\"></a>")) {
+                        flag1 = false;
+                    }
+                    if (inputeLine.contains("<div class=\"clear\"></div>")) {
+                        flag1 = true;
+                    }
+                    if (flag1) {
+                        str1.append("###").append(inputeLine);
+                    }
+
 
                     if (inputeLine.contains("<div class=\"panel_right\">")) {
                         flag = false;
@@ -117,6 +131,7 @@ public class Parsing {
                 e.printStackTrace();
             }
         }
+        String stra = str1.toString();
         String[] masRet;
         String[] mas = str.toString().split("\">###");
         for (int i = 0; i != mas.length; i++) {

@@ -114,7 +114,10 @@ public class MainActivity extends Activity {
     protected void onStart(){
         super.onStart();
 
-        if (sPref.contains(SAVE_AUTOREG)) {
+        Intent intent = new Intent(MainActivity.this, BasketActivity.class);
+        startActivity(intent);
+
+        /*if (sPref.contains(SAVE_AUTOREG)) {
 
             if(sPref.getString(SAVE_AUTOREG, "").equals("Authorized"))
             {
@@ -122,7 +125,7 @@ public class MainActivity extends Activity {
                 startActivity(intent);
 
             }
-        }
+        }*/
     }
 
 
