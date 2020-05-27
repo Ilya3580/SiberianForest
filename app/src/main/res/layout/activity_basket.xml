@@ -9,24 +9,23 @@
     tools:context=".BasketActivity">
 
 
-    <ListView
-        android:id = "@+id/listView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="120dp"
-        />
-
 
 
     <LinearLayout
         android:background="#ffffff"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_gravity="bottom"
         >
 
+        <ListView
+            android:layout_weight="1"
+            android:id="@+id/listView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
         <Button
+            android:layout_weight="0"
             android:id = "@+id/basketClear"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -38,6 +37,7 @@
             />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:layout_weight="0"
             android:id="@+id/bottomMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -45,8 +45,16 @@
             app:itemIconTint="@color/colorPrimaryDark"
             app:labelVisibilityMode="labeled"
             app:menu="@menu/bottom_menu" />
+
     </LinearLayout>
 
-
+    <TextView
+        android:id = "@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Вы пока ничего не добавили в козину"
+        android:textColor="#AEA5A5"
+        android:layout_gravity="center"
+        />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -54,7 +54,6 @@ public class ProductCatalog extends AppCompatActivity {
                 lstPars = priceCatalog.splitString(read());
                 String data = read();
                 lstPars = priceCatalog.splitString(data);
-                fragmentProductImage.setCountElement(lstPars.size());
                 SharedPreferences.Editor ed = sPref.edit();
                 ed.putString(FIRST_ENTER, "FALSE");
                 ed.commit();
@@ -80,11 +79,9 @@ public class ProductCatalog extends AppCompatActivity {
             lstPars = priceCatalog.splitString(read());
             String data = read();
             lstPars = priceCatalog.splitString(data);
-            fragmentProductImage.setCountElement(lstPars.size());
         }
 
 
-        fragmentProductImage.setCountElement(lstPars.size());
         renderCatalog();
         if (sPref.contains(SAVE_AUTOREG)) {
 
@@ -113,9 +110,10 @@ public class ProductCatalog extends AppCompatActivity {
         {
             @Override
             public boolean onNavigationItemSelected (@NonNull MenuItem item){
+                Intent intent;
                 switch (item.getItemId()) {
                     case R.id.person:
-                        Intent intent = new Intent(ProductCatalog.this, PersonActivity.class);
+                        intent = new Intent(getApplicationContext(), PersonActivity.class);
                         startActivity(intent);
                         break;
                     case R.id.contact:
@@ -123,6 +121,8 @@ public class ProductCatalog extends AppCompatActivity {
                     case R.id.catalog:
                         break;
                     case R.id.basket:
+                        intent = new Intent(getApplicationContext(), BasketActivity.class);
+                        startActivity(intent);
                         break;
                 }
                 return true;

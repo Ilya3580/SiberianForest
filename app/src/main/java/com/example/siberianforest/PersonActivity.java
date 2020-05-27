@@ -101,16 +101,19 @@ public class PersonActivity extends AppCompatActivity {
         {
             @Override
             public boolean onNavigationItemSelected (@NonNull MenuItem item){
+                Intent intent;
                 switch (item.getItemId()) {
                     case R.id.person:
                         break;
                     case R.id.contact:
                         break;
                     case R.id.catalog:
-                        Intent intent = new Intent(PersonActivity.this, ProductCatalog.class);
+                        intent = new Intent(getApplicationContext(), ProductCatalog.class);
                         startActivity(intent);
                         break;
                     case R.id.basket:
+                        intent = new Intent(getApplicationContext(), BasketActivity.class);
+                        startActivity(intent);
                         break;
                 }
                 return true;

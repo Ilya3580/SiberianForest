@@ -51,6 +51,7 @@ public class MainActivity extends Activity {
         users = db.getReference();
         fUser = auth.getCurrentUser();
         final FirebaseUser user = auth.getCurrentUser();
+
         enterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,10 +81,7 @@ public class MainActivity extends Activity {
                             }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            if(e.getMessage().equals("The password is invalid or the user does not have a password."))
-                            {
-                                Snackbar.make(findViewById(android.R.id.content), "Введен не верный пароль или email", Snackbar.LENGTH_LONG).show();
-                            }
+                            Snackbar.make(findViewById(android.R.id.content), "Ошибка подключения", Snackbar.LENGTH_LONG).show();
                         }
                     });
                 }
@@ -113,11 +111,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onStart(){
         super.onStart();
-
-        Intent intent = new Intent(MainActivity.this, BasketActivity.class);
-        startActivity(intent);
-
-        /*if (sPref.contains(SAVE_AUTOREG)) {
+        if (sPref.contains(SAVE_AUTOREG)) {
 
             if(sPref.getString(SAVE_AUTOREG, "").equals("Authorized"))
             {
@@ -125,7 +119,7 @@ public class MainActivity extends Activity {
                 startActivity(intent);
 
             }
-        }*/
+        }
     }
 
 
