@@ -84,7 +84,7 @@ public class FragmentProductImage extends Fragment {
         @NonNull
         @Override
         public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)
+            if(context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)
             {
                 return new ViewHolder(getLayoutInflater().inflate(R.layout.product_image_vertical, parent, false));
             }else{
@@ -112,13 +112,23 @@ public class FragmentProductImage extends Fragment {
                 holder.spinnerLeft.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        if(holder.spinnerRight.getSelectedItem() != null)
+                        if(holder.spinnerRight.getSelectedItem() != null) {
                             setStrSize(holder.spinnerRight.getSelectedItem().toString());
+                        }else{
+                            setStrSize(null);
+                        }
                         strSort = holder.spinnerLeft.getSelectedItem().toString();
                         holder.price.setText(priceCatalog.splitPrise(mItems.get(positionParent).priceCatalogs, strSize, strSort));
                         if(holder.price.getText().toString().contains("null"))
                         {
-                            holder.price.setText(holder.price.getText().toString().substring(4));
+                            if(holder.price.getText().toString().indexOf("null") > 1)
+                            {
+                                String str = holder.price.getText().toString();
+                                str = str.substring(0, str.length()-4);
+                                holder.price.setText(str);
+                            }else {
+                                holder.price.setText(holder.price.getText().toString().substring(4));
+                            }
                         }
 
                     }
@@ -146,6 +156,11 @@ public class FragmentProductImage extends Fragment {
             }
 
             if(mItems.get(positionParent).rightSpinner != null) {
+                if(holder.spinnerLeft.getSelectedItem() != null) {
+                    setStrSort(holder.spinnerLeft.getSelectedItem().toString());
+                }else{
+                    setStrSort(null);
+                }
                 holder.spinnerRight.setVisibility(View.VISIBLE);
                 ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, masR = mItems.get(positionParent).rightSpinner);
                 adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -192,7 +207,7 @@ public class FragmentProductImage extends Fragment {
                     boolean flag = true;
 
                     String sortSize = "";
-                    if(holder.spinnerLeft.getSelectedItem()!= null)
+                    if(holder.spinnerLeft.getVisibility() != View.GONE)
                     {
                         if(holder.spinnerLeft.getSelectedItem().toString().equals("сорт"))
                         {
@@ -202,7 +217,7 @@ public class FragmentProductImage extends Fragment {
                         }
                     }
 
-                    if(holder.spinnerRight.getSelectedItem()!= null)
+                    if(holder.spinnerRight.getVisibility() != View.GONE)
                     {
                         if(holder.spinnerRight.getSelectedItem().toString().equals("размер"))
                         {
@@ -304,7 +319,7 @@ public class FragmentProductImage extends Fragment {
                     {
                         str = mas[i];
                     }else{
-                        str = "####" + mas[i];
+                        str = str + "####" + mas[i];
                     }
                 }
                 if(flag)

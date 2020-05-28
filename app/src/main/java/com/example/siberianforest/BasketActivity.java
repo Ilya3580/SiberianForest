@@ -224,7 +224,7 @@ public class BasketActivity extends AppCompatActivity {
                 {
                     str = mas[i];
                 }else{
-                    str = "####" + mas[i];
+                    str = str + "####" + mas[i];
                 }
                 arrayLists.add(mas[i].split("###"));
             }
@@ -235,6 +235,7 @@ public class BasketActivity extends AppCompatActivity {
 
     private void stringToArray()
     {
+        Log.d("TAGA", splitStr);
         arrayLists.clear();
         String[] mas = splitStr.split("####");
         for(int i = 0; i!= mas.length; i++)
@@ -292,7 +293,7 @@ public class BasketActivity extends AppCompatActivity {
                                 .withBody("Информация о пользователе" + sPref.getString(EMAIL, "")
                                         + ".  Email" + sPref.getString(NAMEN, "") + "Заказ:" + read())
                                 .withSender("afanasevaleksej532@gmail.com")
-                                .toEmailAddress("ilya.smetanin.2002@mail.ru") // one or multiple addresses separated by a comma
+                                .toEmailAddress("ilya.smetanin.2002@mail.ru")
                                 .withListenner(new GmailListener() {
                                     @Override
                                     public void sendSuccess() {
@@ -301,7 +302,7 @@ public class BasketActivity extends AppCompatActivity {
 
                                     @Override
                                     public void sendFail(String err) {
-                                        Snackbar.make(findViewById(android.R.id.content), "Проверьте подключение к интерненту", Snackbar.LENGTH_LONG).show();
+                                        Snackbar.make(findViewById(android.R.id.content), "Проверьте подключение к интернету", Snackbar.LENGTH_LONG).show();
                                     }
                                 })
                                 .send();

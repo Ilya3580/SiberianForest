@@ -67,7 +67,7 @@ public class PersonActivity extends AppCompatActivity {
         mas[3] = "Сменить номер телефона";
         mas[4] = "Сменить email";
         mas[5] = "Сменить пароль";
-        mas[6] = "выйти";
+        mas[6] = "Выйти";
 
         sPref = getSharedPreferences(NAME_SPREF, Context.MODE_PRIVATE);
 

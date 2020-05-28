@@ -60,9 +60,6 @@ public class ProductCatalog extends AppCompatActivity {
             }
             else
             {
-                SharedPreferences.Editor ed = sPref.edit();
-                ed.putString(FIRST_ENTER, "TRUE");
-                ed.commit();
                 String data = read();
                 lstPars = priceCatalog.splitString(data);
             }

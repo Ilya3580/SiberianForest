@@ -236,6 +236,9 @@ public class PriceCatalog {
                 return true;
             }
         }
+
+
+
         return false;
     }
 

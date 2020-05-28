@@ -23,10 +23,6 @@ public class Parsing {
         link = "http://slp2000.ru/";
         BufferedReader buf = readBuffer(link);
         String[] mas = returnLink(buf);
-        /*for (int i = 0; i != mas.length; i++) {
-            Log.d("TAGAZ", mas[i]);
-        }*/
-        ArrayList<ArrayList<PriceCatalog>> priceCatalog = new ArrayList<>();
         for(int j = 0; j!= mas.length; j++) {
             checkPrice(readBuffer(mas[j]));
 
@@ -36,14 +32,12 @@ public class Parsing {
             if(i != 0)
                 stringPriceCatalog +="------------------    ";
             for (int j = 0; j != priceCatalogLast.get(i).size(); j++) {
-                //Log.d("TAGA", priceCatalogLast.get(i).get(j).toString());
                 stringPriceCatalog +=priceCatalogLast.get(i).get(j).toString() + "####";
             }
         }
 
         writeToFile(stringPriceCatalog, context);
 
-        //return priceCatalog;
 
     }
 
