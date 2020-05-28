@@ -81,6 +81,17 @@ public class ProductCatalog extends AppCompatActivity {
             lstPars = priceCatalog.splitString(data);
         }
 
+        for(int i = 0; i!= lstPars.size();i++)
+        {
+            Log.d("TAGA", "----------------------");
+            for(int j = 0; j!=lstPars.get(i).size(); j++)
+            {
+                Log.d("TAGA", lstPars.get(i).get(j).toString());
+            }
+        }
+
+        sortList("");
+        renderCatalog();
 
         renderCatalog();
         if (sPref.contains(SAVE_AUTOREG)) {
@@ -117,6 +128,8 @@ public class ProductCatalog extends AppCompatActivity {
                         startActivity(intent);
                         break;
                     case R.id.contact:
+                        intent = new Intent(getApplicationContext(), MapsActivityContact.class);
+                        startActivity(intent);
                         break;
                     case R.id.catalog:
                         break;
@@ -128,6 +141,9 @@ public class ProductCatalog extends AppCompatActivity {
                 return true;
             }
         });
+
+
+
     }
     private void renderCatalog()
     {

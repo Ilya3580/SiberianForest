@@ -116,6 +116,10 @@ public class FragmentProductImage extends Fragment {
                             setStrSize(holder.spinnerRight.getSelectedItem().toString());
                         strSort = holder.spinnerLeft.getSelectedItem().toString();
                         holder.price.setText(priceCatalog.splitPrise(mItems.get(positionParent).priceCatalogs, strSize, strSort));
+                        if(holder.price.getText().toString().contains("null"))
+                        {
+                            holder.price.setText(holder.price.getText().toString().substring(4));
+                        }
 
                     }
 
@@ -125,13 +129,12 @@ public class FragmentProductImage extends Fragment {
                     }
                 });
             }else{
-                strSize = null;
+                strSort = null;
                 holder.spinnerLeft.setVisibility(View.GONE);
                 holder.spinnerRight.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                 holder.spinnerLeft.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
 
                     }
 
@@ -155,6 +158,10 @@ public class FragmentProductImage extends Fragment {
                             setStrSort(holder.spinnerLeft.getSelectedItem().toString());
                         strSize = holder.spinnerRight.getSelectedItem().toString();
                         holder.price.setText(priceCatalog.splitPrise(mItems.get(positionParent).priceCatalogs, strSize, strSort));
+                        if(holder.price.getText().toString().contains("null"))
+                        {
+                            holder.price.setText(holder.price.getText().toString().substring(4));
+                        }
 
                     }
 
@@ -164,13 +171,12 @@ public class FragmentProductImage extends Fragment {
                     }
                 });
             }else {
-                strSort = null;
+                strSize = null;
                 holder.spinnerRight.setVisibility(View.GONE);
                 holder.spinnerLeft.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                 holder.spinnerRight.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
 
                     }
 
@@ -180,7 +186,6 @@ public class FragmentProductImage extends Fragment {
                     }
                 });
             }
-
             holder.button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -311,7 +316,6 @@ public class FragmentProductImage extends Fragment {
                         str = str + "####" + enterText + "###" + name + "###" + sortSize + "###" + price + "###" + link;
                     }
                 }
-                Log.d("TAGA", str);
                 writeToFile(str);
                 //writeToFile("");
         }});

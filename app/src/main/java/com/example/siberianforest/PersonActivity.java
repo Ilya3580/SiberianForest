@@ -106,9 +106,14 @@ public class PersonActivity extends AppCompatActivity {
                     case R.id.person:
                         break;
                     case R.id.contact:
+                        intent = new Intent(getApplicationContext(), MapsActivityContact.class);
+                        startActivity(intent);
                         break;
                     case R.id.catalog:
                         intent = new Intent(getApplicationContext(), ProductCatalog.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
                         startActivity(intent);
                         break;
                     case R.id.basket:

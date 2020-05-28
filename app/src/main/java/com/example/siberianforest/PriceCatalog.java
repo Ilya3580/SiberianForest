@@ -139,7 +139,7 @@ public class PriceCatalog {
                     }
                     return min1 + "-" + max1 + " р./M2";
                 }
-                return min1 + "-" + max1 + " р./M2;     " + min2 + "-" + max2 + " р./M3";
+                return min1 + "-" + max1 + " р./M2; " + min2 + "-" + max2 + " р./M3";
             }
         }
         for(int i = 0;i != lst.size(); i++)
@@ -159,7 +159,7 @@ public class PriceCatalog {
                     priceM3 = lst.get(i).getPriceM3();
                 }
             }
-            else if(lst.get(i).getSize() != null) {
+            else {
                 if(helpSplitStringPrice(lst.get(i).getSize(), size) && lst.get(i).getSortTree().equals(sort))
                 {
                     priceM2 = lst.get(i).getPriceM2();
@@ -171,14 +171,9 @@ public class PriceCatalog {
 
         String string = "";
 
-        if(priceM2 != null)
-        {
-            string +=priceM2;
-        }
-        if(priceM3 != null)
-        {
-            string +=" " + priceM3;
-        }
+
+        string +=priceM2;
+        string +=" " + priceM3;
 
         return string;
 
@@ -201,8 +196,9 @@ public class PriceCatalog {
             if(mas[1].indexOf("(") != -1)
             {
                 flag1 = true;
+                String stra2 = mas[1].split("-")[mas[1].split("-").length-1].trim();
                 int a1 = Integer.valueOf(mas[1].split("-")[0].trim().substring(1)),
-                        a2 = Integer.valueOf(mas[1].split("-")[mas[1].split("-").length-1].trim().substring(0,mas[1].split("-")[mas[1].split("-").length-1].trim().length()-1));
+                        a2 = Integer.valueOf(stra2.substring(0, stra2.length()-1));
 
                 int number = Integer.valueOf(str2Mas[1]);
                 if(number > a1 && number < a2 || number == a1 || number == a2)
@@ -215,8 +211,7 @@ public class PriceCatalog {
 
             int a1 = Integer.valueOf(mas[2].split("-")[0].trim().substring(1)),
                     a2 = Integer.valueOf(mas[2].split("-")[1].trim().substring(0,mas[2].split("-")[1].trim().length()-1));
-            if((mas[0] + mas[1]).indexOf(str2Mas[0] + str2Mas[1]) !=-1)
-            {
+
                 int number = Integer.valueOf(str2Mas[2]);
                 if(number > a1 && number < a2 || number == a1 || number == a2)
                 {
@@ -228,12 +223,15 @@ public class PriceCatalog {
                         return true;
                     }
                 }
-            }
+
         }
         if(str1.indexOf(";") != -1)
         {
             String[] str2Mas = str2.split(" x ");
             String[] mas = str1.split(" x ");
+            if(str2Mas.length<2 || mas.length<2)
+                return true;
+
             if((mas[0] + mas[1]).indexOf(str2Mas[0] + str2Mas[1]) !=-1) {
                 return true;
             }

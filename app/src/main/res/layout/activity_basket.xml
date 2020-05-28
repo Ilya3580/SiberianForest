@@ -17,7 +17,31 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         >
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:id = "@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_weight="0"
+            >
 
+            <fragment
+                android:layout_marginLeft="5dp"
+                android:id="@+id/listFragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:name="com.example.siberianforest.FragmentArrowBack"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/basket_text"
+                android:textAlignment="center"
+                android:textSize="25sp"
+                />
+        </LinearLayout>
         <ListView
             android:layout_weight="1"
             android:id="@+id/listView"

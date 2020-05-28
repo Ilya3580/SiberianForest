@@ -15,11 +15,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.text.InputType;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -34,6 +36,7 @@ import java.util.List;
 
 public class BasketActivity extends AppCompatActivity {
 
+    String splitStr;
     SharedPreferences sPref;
     final String SAVE_AUTOREG = "SAVE_SETTINGS";
     final String EMAIL = "EMAIL";
@@ -63,28 +66,7 @@ public class BasketActivity extends AppCompatActivity {
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        GMailSender.withAccount("afanasevaleksej532@gmail.com", "49154017")
-                                .withTitle("Новый заказ")
-                                .withBody("Информация о пользователе" + sPref.getString(EMAIL, "")
-                                        + ".  Email" + sPref.getString(NAMEN, "") + "Заказ:" + read())
-                                .withSender("afanasevaleksej532@gmail.com")
-                                .toEmailAddress("ilya.smetanin.2002@mail.ru") // one or multiple addresses separated by a comma
-                                .withListenner(new GmailListener() {
-                                    @Override
-                                    public void sendSuccess() {
-                                        dialogWindow("Ваш заказ оформлен. В течении двух дней с вами свяжется менеджер");
-                                    }
-
-                                    @Override
-                                    public void sendFail(String err) {
-                                        Snackbar.make(findViewById(android.R.id.content), "Проверьте подключение к интерненту", Snackbar.LENGTH_LONG).show();
-                                    }
-                                })
-                                .send();
-
-
-                        writeToFile("");
-                        onStart();
+                        alertDialogPassword();
                     }
                 });
 
@@ -92,8 +74,6 @@ public class BasketActivity extends AppCompatActivity {
                 button.setVisibility(View.GONE);
             }
         }
-
-
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomMenu);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener()
@@ -107,9 +87,14 @@ public class BasketActivity extends AppCompatActivity {
                         startActivity(intent);
                         break;
                     case R.id.contact:
+                        intent = new Intent(getApplicationContext(), MapsActivityContact.class);
+                        startActivity(intent);
                         break;
                     case R.id.catalog:
                         intent = new Intent(getApplicationContext(), ProductCatalog.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
                         startActivity(intent);
                         break;
                     case R.id.basket:
@@ -120,26 +105,24 @@ public class BasketActivity extends AppCompatActivity {
             }
         });
 
-        String splitStr = read();
+        splitStr = read();
         if(splitStr == "")
         {
             textView.setVisibility(View.VISIBLE);
         }else{
             textView.setVisibility(View.GONE);
-            Log.d("Taga", splitStr);
-            String[] mas = splitStr.split("####");
-            for(int i = 0; i!= mas.length; i++)
-            {
-                arrayLists.add(mas[i].split("###"));
-            }
+            stringToArray();
             setInitialData();
         }
 
         BasketAdapter stateAdapter = new BasketAdapter(this, R.layout.product_image_basket, states);
         listView.setAdapter(stateAdapter);
-        AdapterView.OnItemClickListener itemListener = new AdapterView.OnItemClickListener() {
+        final AdapterView.OnItemClickListener itemListener = new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                String str = states.get(safeLongToInt(id)).getName();
+
+                alertDialogSet(str);
 
             }
         };
@@ -149,7 +132,16 @@ public class BasketActivity extends AppCompatActivity {
 
         for(int i = 0; i!= arrayLists.size(); i++)
         {
-            states.add(new BasketParam(arrayLists.get(i)[1] + "\nКоличество: " + arrayLists.get(i)[0].split(" \\(")[0],
+            String size = arrayLists.get(i)[0];
+            if(size.length() > 1) {
+                if (size.charAt(0) == '0' && size.charAt(1) != '.') {
+                    size = size.substring(1);
+                }
+            }
+            //String[] mas = arrayLists.get(i)[3].split(" ");
+            //String prise = mas[0] + " " + mas[1];
+            if(!arrayLists.get(i)[0].equals(""))
+                states.add(new BasketParam(arrayLists.get(i)[1] + "\nКоличество: " + size,
                     "Размер: " + arrayLists.get(i)[2] + "\nЦена:" + arrayLists.get(i)[3] , arrayLists.get(i)[4]));
         }
 
@@ -209,4 +201,119 @@ public class BasketActivity extends AppCompatActivity {
         }
     }
 
+    private int safeLongToInt(long l) {
+        if (l < Integer.MIN_VALUE || l > Integer.MAX_VALUE) {
+            throw new IllegalArgumentException
+                    (l + " cannot be cast to int without changing its value.");
+        }
+        return (int) l;
+    }
+
+    private void destroy(String name)
+    {
+        String str = "";
+        arrayLists.clear();
+        String[] mas = splitStr.split("####");
+        for(int i = 0; i!= mas.length; i++)
+        {
+            String splitName = name.split("Кол")[0];
+            splitName = splitName.substring(0, splitName.length()-1);
+
+            if(!mas[i].contains(splitName)) {
+                if(str.equals(""))
+                {
+                    str = mas[i];
+                }else{
+                    str = "####" + mas[i];
+                }
+                arrayLists.add(mas[i].split("###"));
+            }
+        }
+        splitStr = str;
+        writeToFile(str);
+    }
+
+    private void stringToArray()
+    {
+        arrayLists.clear();
+        String[] mas = splitStr.split("####");
+        for(int i = 0; i!= mas.length; i++)
+        {
+            arrayLists.add(mas[i].split("###"));
+        }
+    }
+
+    private void alertDialogSet(final String name)
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle("Удалить элемент");
+
+        builder.setNegativeButton("НЕТ", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.setPositiveButton("ДА", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        destroy(name);
+                        Intent intent = new Intent(BasketActivity.this, BasketActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        dialog.cancel();
+                    }
+                });
+
+        builder.show();
+    }
+
+    private void alertDialogPassword()
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Введите пароль от аккаунта");
+
+        final EditText input = new EditText(this);
+        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        builder.setView(input);
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String text = input.getText().toString();
+                if (sPref.contains(PASSWORD)) {
+                    if(sPref.getString(PASSWORD, "").equals(text))
+                    {
+                        GMailSender.withAccount("afanasevaleksej532@gmail.com", "49154017")
+                                .withTitle("Новый заказ")
+                                .withBody("Информация о пользователе" + sPref.getString(EMAIL, "")
+                                        + ".  Email" + sPref.getString(NAMEN, "") + "Заказ:" + read())
+                                .withSender("afanasevaleksej532@gmail.com")
+                                .toEmailAddress("ilya.smetanin.2002@mail.ru") // one or multiple addresses separated by a comma
+                                .withListenner(new GmailListener() {
+                                    @Override
+                                    public void sendSuccess() {
+                                        dialogWindow("Ваш заказ оформлен. В течении двух дней с вами свяжется менеджер");
+                                    }
+
+                                    @Override
+                                    public void sendFail(String err) {
+                                        Snackbar.make(findViewById(android.R.id.content), "Проверьте подключение к интерненту", Snackbar.LENGTH_LONG).show();
+                                    }
+                                })
+                                .send();
+
+
+                        writeToFile("");
+                        onStart();
+                    }
+                }
+            }
+        });
+
+        builder.show();
+    }
 }
